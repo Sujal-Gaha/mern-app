@@ -1,0 +1,31 @@
+# Node modules
+node_modules/
+**/node_modules/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Environment variables
+.env
+**/.env
+
+# TypeScript output
+dist/
+**/dist
+
+# Next.js build output
+.next/
+out/
+
+# Build directory
+build/
+**/build
+
+# npm package-lock and yarn.lock files (optional)
+package-lock.json
+yarn.lock
