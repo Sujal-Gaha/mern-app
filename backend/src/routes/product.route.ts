@@ -7,7 +7,8 @@ const productRouter = express.Router();
 const { addProduct } = getProductMutations();
 productRouter.post("/add", addProduct);
 
-const { getAllProducts } = getProductQueries();
+const { getAllProducts, getProductByProductId } = getProductQueries();
 productRouter.get("/", getAllProducts);
+productRouter.get("/:productId", getProductByProductId);
 
 export default productRouter;
