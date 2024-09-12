@@ -13,8 +13,9 @@ const { getAllProducts, getProductByProductId } = getProductQueries();
 router.get("/", getAllProducts);
 router.get("/getProductById/:productId", getProductByProductId);
 
-const { createCategory } = getCategoryMutations();
+const { createCategory, deleteCategoryById } = getCategoryMutations();
 router.post("/category/create", createCategory);
+router.post("/category/delete/:categoryId", deleteCategoryById);
 
 const { getAllCategory } = getCategoryQueries();
 router.get("/category", getAllCategory);
