@@ -6,8 +6,9 @@ import { getCategoryQueries } from "../controllers/category/query";
 
 const router = express.Router();
 
-const { addProduct } = getProductMutations();
+const { addProduct, deleteProductById } = getProductMutations();
 router.post("/add", addProduct);
+router.post("/delete/:productId", deleteProductById);
 
 const { getAllProducts, getProductByProductId } = getProductQueries();
 router.get("/", getAllProducts);

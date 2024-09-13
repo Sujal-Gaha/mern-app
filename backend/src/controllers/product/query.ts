@@ -19,7 +19,12 @@ const getProductByProductId = async (req: Request, res: Response) => {
     const productById = await ProductModel.findById(productId);
 
     if (!productById) {
-      throw new Error(`Todo with the id: ${productId} doesnot exist`);
+      return res.status(404).json({
+        status: 404,
+        data: null,
+        success: false,
+        message: `Todo with the id: ${productId} doesnot exist`,
+      });
     }
 
     res.status(200).json({
