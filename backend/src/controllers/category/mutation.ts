@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { CategoryModel } from "../../models/category.model";
 
-const createCategory = async (req: Request, res: Response) => {
+const addCategory = async (req: Request, res: Response) => {
   const category = req.body;
 
   try {
@@ -34,7 +34,7 @@ const createCategory = async (req: Request, res: Response) => {
   }
 };
 
-const deleteCategoryById = async (req: Request, res: Response) => {
+const deleteCategory = async (req: Request, res: Response) => {
   const { categoryId } = req.params;
 
   if (!categoryId) {
@@ -77,5 +77,5 @@ const deleteCategoryById = async (req: Request, res: Response) => {
 };
 
 export const getCategoryMutations = () => {
-  return { createCategory, deleteCategoryById };
+  return { addCategory, deleteCategory };
 };

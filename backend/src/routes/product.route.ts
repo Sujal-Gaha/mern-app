@@ -1,24 +1,16 @@
 import express from "express";
 import { getProductMutations } from "../controllers/product/mutation";
 import { getProductQueries } from "../controllers/product/query";
-import { getCategoryMutations } from "../controllers/category/mutation";
-import { getCategoryQueries } from "../controllers/category/query";
 
-const router = express.Router();
-
-const { addProduct, deleteProductById } = getProductMutations();
-router.post("/add", addProduct);
-router.post("/delete/:productId", deleteProductById);
+const productRouter = express.Router();
 
 const { getAllProducts, getProductByProductId } = getProductQueries();
-router.get("/", getAllProducts);
-router.get("/getProductById/:productId", getProductByProductId);
+productRouter.get("/", getAllProducts);
+productRouter.get("/getProductById/:productId", getProductByProductId);
 
-const { createCategory, deleteCategoryById } = getCategoryMutations();
-router.post("/category/create", createCategory);
-router.post("/category/delete/:categoryId", deleteCategoryById);
+const { addProduct, deleteProduct, updateProduct } = getProductMutations();
+productRouter.post("/add", addProduct);
+productRouter.post("/delete/:productId", deleteProduct);
+productRouter.put("/update/:productId", updateProduct);
 
-const { getAllCategory } = getCategoryQueries();
-router.get("/category", getAllCategory);
-
-export { router };
+export { productRouter };

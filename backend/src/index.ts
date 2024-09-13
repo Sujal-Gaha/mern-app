@@ -1,7 +1,8 @@
 import express from "express";
 import dotenv from "dotenv";
 import connectDB from "./config/db";
-import { router } from "./routes/product.route";
+import { productRouter } from "./routes/product.route";
+import { categoryRouter } from "./routes/category.route";
 
 dotenv.config();
 
@@ -16,4 +17,5 @@ connectDB()
   })
   .catch((error) => console.log("Error ", error));
 
-app.use("/api/v1/product", router);
+app.use("/api/v1/product", productRouter);
+app.use("/api/v1/category", categoryRouter);
