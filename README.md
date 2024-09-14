@@ -1,3 +1,7 @@
+# About
+
+This is just a side project of mine to learn about backend development with Mongoose and Express
+
 # To run backend
 
 ```sh
