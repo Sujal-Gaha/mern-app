@@ -76,6 +76,50 @@ const deleteCategory = async (req: Request, res: Response) => {
   }
 };
 
+const updatedCategory = async (req: Request, res: Response) => {
+  const { categoryId } = req.params;
+
+  if (!categoryId) {
+    return res.status(400).json({
+      status: 400,
+      data: null,
+      success: false,
+      message: `Bad Request`,
+    });
+  }
+
+  const category = await CategoryModel.findById(categoryId);
+
+  if (!category) {
+    return res.status(404).json({
+      status: 404,
+      data: null,
+      success: false,
+      message: `Category with the id ${categoryId} doesnot exist`,
+    });
+  }
+
+  try {
+    await CategoryModel.findByIdAndUpdate(categoryId, req.body);
+
+    res.status(200).json({
+      status: 200,
+      data: category,
+      success: true,
+      message: `Updated the category successfully!`,
+    });
+  } catch (error: any) {
+    console.log("Error while updating the category");
+
+    res.status(500).json({
+      status: 500,
+      data: null,
+      success: false,
+      message: error.message || "Internal Server Error",
+    });
+  }
+};
+
 export const getCategoryMutations = () => {
-  return { addCategory, deleteCategory };
+  return { addCategory, deleteCategory, updatedCategory };
 };
