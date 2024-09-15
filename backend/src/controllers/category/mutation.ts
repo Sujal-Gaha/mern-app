@@ -3,9 +3,9 @@ import { CategoryModel } from "../../models/category.model";
 import { handleError } from "../../utils/errorHandler";
 
 const addCategory = async (req: Request, res: Response) => {
-  const category = req.body;
-
   try {
+    const category = req.body;
+
     if (!category.name) {
       return res.status(400).json({
         status: 400,
@@ -29,18 +29,18 @@ const addCategory = async (req: Request, res: Response) => {
 };
 
 const deleteCategory = async (req: Request, res: Response) => {
-  const { categoryId } = req.params;
-
-  if (!categoryId) {
-    return res.status(400).json({
-      status: 400,
-      data: null,
-      success: false,
-      message: "Please provide the categoryId",
-    });
-  }
-
   try {
+    const { categoryId } = req.params;
+
+    if (!categoryId) {
+      return res.status(400).json({
+        status: 400,
+        data: null,
+        success: false,
+        message: "Please provide the categoryId",
+      });
+    }
+
     const category = await CategoryModel.findByIdAndDelete(categoryId);
 
     if (!category) {
@@ -64,29 +64,29 @@ const deleteCategory = async (req: Request, res: Response) => {
 };
 
 const updatedCategory = async (req: Request, res: Response) => {
-  const { categoryId } = req.params;
-
-  if (!categoryId) {
-    return res.status(400).json({
-      status: 400,
-      data: null,
-      success: false,
-      message: `Bad Request`,
-    });
-  }
-
-  const category = await CategoryModel.findById(categoryId);
-
-  if (!category) {
-    return res.status(404).json({
-      status: 404,
-      data: null,
-      success: false,
-      message: `Category with the id ${categoryId} doesnot exist`,
-    });
-  }
-
   try {
+    const { categoryId } = req.params;
+
+    if (!categoryId) {
+      return res.status(400).json({
+        status: 400,
+        data: null,
+        success: false,
+        message: `Bad Request`,
+      });
+    }
+
+    const category = await CategoryModel.findById(categoryId);
+
+    if (!category) {
+      return res.status(404).json({
+        status: 404,
+        data: null,
+        success: false,
+        message: `Category with the id ${categoryId} doesnot exist`,
+      });
+    }
+
     await CategoryModel.findByIdAndUpdate(categoryId, req.body);
 
     res.status(200).json({

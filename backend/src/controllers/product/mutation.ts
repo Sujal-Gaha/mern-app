@@ -3,9 +3,9 @@ import { ProductModel } from "../../models/product.model";
 import { handleError } from "../../utils/errorHandler";
 
 const addProduct = async (req: Request, res: Response) => {
-  const product = req.body;
-
   try {
+    const product = req.body;
+
     if (
       !product.name ||
       !product.price ||
@@ -37,18 +37,18 @@ const addProduct = async (req: Request, res: Response) => {
 };
 
 const deleteProduct = async (req: Request, res: Response) => {
-  const { productId } = req.params;
-
-  if (!productId) {
-    return res.status(400).json({
-      status: 400,
-      data: null,
-      success: false,
-      message: "Please provide the productId",
-    });
-  }
-
   try {
+    const { productId } = req.params;
+
+    if (!productId) {
+      return res.status(400).json({
+        status: 400,
+        data: null,
+        success: false,
+        message: "Please provide the productId",
+      });
+    }
+
     const deletedProduct = await ProductModel.findByIdAndDelete(productId);
 
     if (!deletedProduct) {
@@ -72,17 +72,17 @@ const deleteProduct = async (req: Request, res: Response) => {
 };
 
 const updateProduct = async (req: Request, res: Response) => {
-  const { productId } = req.params;
-
-  if (!productId) {
-    return res.status(400).json({
-      status: 400,
-      data: null,
-      success: false,
-    });
-  }
-
   try {
+    const { productId } = req.params;
+
+    if (!productId) {
+      return res.status(400).json({
+        status: 400,
+        data: null,
+        success: false,
+      });
+    }
+
     const product = await ProductModel.findById(productId);
 
     if (!product) {
