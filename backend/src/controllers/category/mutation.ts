@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { CategoryModel } from "../../models/category.model";
+import { handleError } from "../../utils/errorHandler";
 
 const addCategory = async (req: Request, res: Response) => {
   const category = req.body;
@@ -23,14 +24,7 @@ const addCategory = async (req: Request, res: Response) => {
       message: "Created the category successfully!",
     });
   } catch (error: any) {
-    console.log("Error while creating category ", error);
-
-    return res.status(500).json({
-      status: 500,
-      data: null,
-      success: false,
-      message: error.message || "Internal Server Error",
-    });
+    handleError(res, error);
   }
 };
 
@@ -65,14 +59,7 @@ const deleteCategory = async (req: Request, res: Response) => {
       message: `Deleted the category with id ${categoryId} successfully`,
     });
   } catch (error: any) {
-    console.log("Error while deleting category", error);
-
-    res.status(500).json({
-      status: 500,
-      data: null,
-      success: false,
-      message: error.message || "Internal Server Error",
-    });
+    handleError(res, error);
   }
 };
 
@@ -109,14 +96,7 @@ const updatedCategory = async (req: Request, res: Response) => {
       message: `Updated the category successfully!`,
     });
   } catch (error: any) {
-    console.log("Error while updating the category");
-
-    res.status(500).json({
-      status: 500,
-      data: null,
-      success: false,
-      message: error.message || "Internal Server Error",
-    });
+    handleError(res, error);
   }
 };
 

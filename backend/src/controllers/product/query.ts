@@ -5,18 +5,23 @@ import {
   TGetAllProducts,
   TGetProductByProductId,
 } from "../../types/product/TProductResponse";
+import { handleError } from "../../utils/errorHandler";
 
 const getAllProducts = async (req: Request, res: Response) => {
-  const product = await ProductModel.find();
+  try {
+    const product = await ProductModel.find();
 
-  const productResponse: TGetAllProducts = {
-    status: 200,
-    data: product,
-    success: true,
-    message: "Fetched all the products successfully",
-  };
+    const productResponse: TGetAllProducts = {
+      status: 200,
+      data: product,
+      success: true,
+      message: "Fetched all the products successfully",
+    };
 
-  res.status(200).json(productResponse);
+    res.status(200).json(productResponse);
+  } catch (error: any) {
+    handleError(res, error);
+  }
 };
 
 const getProductByProductId = async (req: Request, res: Response) => {
@@ -52,14 +57,7 @@ const getProductByProductId = async (req: Request, res: Response) => {
 
     res.status(200).json(productByIdResponse);
   } catch (error: any) {
-    console.log("Error while getting product by id", error);
-
-    res.status(500).json({
-      status: 500,
-      data: null,
-      success: false,
-      message: error.message || "Internal Server Error",
-    });
+    handleError(res, error);
   }
 };
 
@@ -105,14 +103,7 @@ const getProductsByCategory = async (req: Request, res: Response) => {
       message: "Successfully fetched the product by category",
     });
   } catch (error: any) {
-    console.log("Error while fetching product by category ", error);
-
-    res.status(500).json({
-      status: 500,
-      data: null,
-      success: false,
-      message: error.message || "Internal Server Error",
-    });
+    handleError(res, error);
   }
 };
 
@@ -131,14 +122,7 @@ const getProductsWithDiscount = async (req: Request, res: Response) => {
       message: "Fetched all the products with discount successfully",
     });
   } catch (error: any) {
-    console.log("Error while getting products with discount ", error);
-
-    res.status(500).json({
-      status: 500,
-      data: null,
-      success: false,
-      message: error.message || "Internal Server Error",
-    });
+    handleError(res, error);
   }
 };
 

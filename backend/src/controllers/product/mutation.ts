@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { ProductModel } from "../../models/product.model";
+import { handleError } from "../../utils/errorHandler";
 
 const addProduct = async (req: Request, res: Response) => {
   const product = req.body;
@@ -31,14 +32,7 @@ const addProduct = async (req: Request, res: Response) => {
       message: "Added the product successfully!",
     });
   } catch (error) {
-    console.log("Error while adding product", error);
-
-    res.status(500).json({
-      status: 500,
-      data: null,
-      success: false,
-      message: "Internal Server Error!",
-    });
+    handleError(res, error);
   }
 };
 
@@ -73,14 +67,7 @@ const deleteProduct = async (req: Request, res: Response) => {
       message: `Deleted the product with id ${productId} successfully`,
     });
   } catch (error: any) {
-    console.log("Error ", error);
-
-    res.status(500).json({
-      status: 500,
-      data: null,
-      success: false,
-      message: error.message || "Internal Server Error",
-    });
+    handleError(res, error);
   }
 };
 
@@ -119,14 +106,7 @@ const updateProduct = async (req: Request, res: Response) => {
       message: "Updated the product successfully",
     });
   } catch (error: any) {
-    console.log("Error while updating product", error);
-
-    res.status(500).json({
-      status: 500,
-      data: null,
-      success: false,
-      message: error.message || "Internal server error",
-    });
+    handleError(res, error);
   }
 };
 
