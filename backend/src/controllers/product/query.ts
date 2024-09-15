@@ -99,6 +99,37 @@ const getProductsByCategory = async (req: Request, res: Response) => {
   }
 };
 
+const getProductsWithDiscount = async (req: Request, res: Response) => {
+  try {
+    const productsWithDiscount = await ProductModel.find({
+      discountRate: {
+        $gt: 0,
+      },
+    });
+
+    res.status(200).json({
+      status: 200,
+      data: productsWithDiscount,
+      success: true,
+      message: "Fetched all the products with discount successfully",
+    });
+  } catch (error: any) {
+    console.log("Error while getting products with discount ", error);
+
+    res.status(500).json({
+      status: 500,
+      data: null,
+      success: false,
+      message: error.message || "Internal Server Error",
+    });
+  }
+};
+
 export const getProductQueries = () => {
-  return { getAllProducts, getProductByProductId, getProductsByCategory };
+  return {
+    getAllProducts,
+    getProductByProductId,
+    getProductsByCategory,
+    getProductsWithDiscount,
+  };
 };

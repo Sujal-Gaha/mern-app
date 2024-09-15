@@ -30,15 +30,12 @@ const ProductSchema = new mongoose.Schema(
       ref: "Category",
       required: true,
     },
-    discount: {
-      type: Number,
-      required: false,
-    },
     image: {
       type: String,
       required: true,
       trim: true,
     },
+    discountRate: Number,
   },
   {
     timestamps: true,
