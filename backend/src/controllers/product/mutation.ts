@@ -66,7 +66,7 @@ const deleteProduct = async (req: Request, res: Response) => {
       success: true,
       message: `Deleted the product with id ${productId} successfully`,
     });
-  } catch (error: any) {
+  } catch (error) {
     handleError(res, error);
   }
 };
@@ -105,7 +105,7 @@ const updateProduct = async (req: Request, res: Response) => {
       success: true,
       message: "Updated the product successfully",
     });
-  } catch (error: any) {
+  } catch (error) {
     handleError(res, error);
   }
 };

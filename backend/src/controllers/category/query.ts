@@ -12,7 +12,7 @@ const getAllCategory = async (req: Request, res: Response) => {
       success: true,
       message: "Fetched all the categories successfully",
     });
-  } catch (error: any) {
+  } catch (error) {
     handleError(res, error);
   }
 };

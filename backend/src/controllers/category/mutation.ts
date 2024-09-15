@@ -23,7 +23,7 @@ const addCategory = async (req: Request, res: Response) => {
       success: true,
       message: "Created the category successfully!",
     });
-  } catch (error: any) {
+  } catch (error) {
     handleError(res, error);
   }
 };
@@ -58,7 +58,7 @@ const deleteCategory = async (req: Request, res: Response) => {
       success: true,
       message: `Deleted the category with id ${categoryId} successfully`,
     });
-  } catch (error: any) {
+  } catch (error) {
     handleError(res, error);
   }
 };
@@ -95,7 +95,7 @@ const updatedCategory = async (req: Request, res: Response) => {
       success: true,
       message: `Updated the category successfully!`,
     });
-  } catch (error: any) {
+  } catch (error) {
     handleError(res, error);
   }
 };

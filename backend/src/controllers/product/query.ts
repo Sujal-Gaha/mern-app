@@ -19,7 +19,7 @@ const getAllProducts = async (req: Request, res: Response) => {
     };
 
     res.status(200).json(productResponse);
-  } catch (error: any) {
+  } catch (error) {
     handleError(res, error);
   }
 };
@@ -56,7 +56,7 @@ const getProductByProductId = async (req: Request, res: Response) => {
     };
 
     res.status(200).json(productByIdResponse);
-  } catch (error: any) {
+  } catch (error) {
     handleError(res, error);
   }
 };
@@ -102,7 +102,7 @@ const getProductsByCategory = async (req: Request, res: Response) => {
       success: true,
       message: "Successfully fetched the product by category",
     });
-  } catch (error: any) {
+  } catch (error) {
     handleError(res, error);
   }
 };
@@ -121,7 +121,7 @@ const getProductsWithDiscount = async (req: Request, res: Response) => {
       success: true,
       message: "Fetched all the products with discount successfully",
     });
-  } catch (error: any) {
+  } catch (error) {
     handleError(res, error);
   }
 };
