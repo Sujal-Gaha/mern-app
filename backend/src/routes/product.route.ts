@@ -4,9 +4,11 @@ import { getProductQueries } from "../controllers/product/query";
 
 const productRouter = express.Router();
 
-const { getAllProducts, getProductByProductId } = getProductQueries();
+const { getAllProducts, getProductByProductId, getProductsByCategory } =
+  getProductQueries();
 productRouter.get("/", getAllProducts);
 productRouter.get("/getProductById/:productId", getProductByProductId);
+productRouter.get("/getProductsByCategory/:categoryId", getProductsByCategory);
 
 const { addProduct, deleteProduct, updateProduct } = getProductMutations();
 productRouter.post("/add", addProduct);
