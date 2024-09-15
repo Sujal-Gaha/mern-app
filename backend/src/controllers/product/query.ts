@@ -23,7 +23,7 @@ const getProductByProductId = async (req: Request, res: Response) => {
         status: 404,
         data: null,
         success: false,
-        message: `Todo with the id: ${productId} doesnot exist`,
+        message: `Product with the id: ${productId} doesnot exist!`,
       });
     }
 
