@@ -15,6 +15,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Facebook, Github } from "lucide-react";
 import { getAppsPath } from "@/lib/config";
+import { AppLogo } from "@/components/logo";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -30,7 +31,7 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col justify-center items-center p-4">
       <div className="mb-8">
-        <h1 className="text-4xl font-bold text-primary">BazaarHub</h1>
+        <AppLogo />
       </div>
       <Card className="w-full max-w-md">
         <CardHeader>
