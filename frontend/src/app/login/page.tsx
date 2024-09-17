@@ -14,10 +14,13 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Facebook, Github } from "lucide-react";
+import { getAppsPath } from "@/lib/config";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const { registerPath } = getAppsPath();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -27,7 +30,7 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col justify-center items-center p-4">
       <div className="mb-8">
-        <h1 className="text-4xl font-bold text-primary">Sujal Bazaar</h1>
+        <h1 className="text-4xl font-bold text-primary">BazaarHub</h1>
       </div>
       <Card className="w-full max-w-md">
         <CardHeader>
@@ -75,7 +78,7 @@ export default function LoginPage() {
             <a href="#" className="text-primary hover:underline">
               Forgot password?
             </a>
-            <a href="#" className="text-primary hover:underline">
+            <a href={registerPath} className="text-primary hover:underline">
               Sign up
             </a>
           </div>
