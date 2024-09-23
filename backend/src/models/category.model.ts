@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { InferSchemaType } from "mongoose";
 
 const CategorySchema = new mongoose.Schema(
   {
@@ -17,5 +17,7 @@ const CategorySchema = new mongoose.Schema(
     timestamps: true,
   }
 );
+
+export type TCateogorySchema = InferSchemaType<typeof CategorySchema>;
 
 export const CategoryModel = mongoose.model("Category", CategorySchema);
