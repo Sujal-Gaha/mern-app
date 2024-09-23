@@ -13,7 +13,8 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Facebook, Github } from "lucide-react";
+import { LuFacebook } from "react-icons/lu";
+import { FiGithub } from "react-icons/fi";
 import { getAppsPath } from "@/lib/config";
 import { AppLogo } from "@/components/logo";
 
@@ -95,11 +96,11 @@ export default function LoginPage() {
           </div>
           <div className="flex space-x-4">
             <Button variant="outline" className="w-full">
-              <Github className="mr-2 h-4 w-4" />
+              <FiGithub className="mr-2 h-4 w-4" />
               Github
             </Button>
             <Button variant="outline" className="w-full">
-              <Facebook className="mr-2 h-4 w-4" />
+              <LuFacebook className="mr-2 h-4 w-4" />
               Facebook
             </Button>
           </div>
