@@ -85,7 +85,9 @@ const getProductsByCategory = async (req: Request, res: Response) => {
       });
     }
 
-    const product = await ProductModel.find({ category: categoryId });
+    const product = await ProductModel.find({}).where({
+      category: categoryId,
+    });
 
     if (!product) {
       return res.status(404).json({
