@@ -1,9 +1,9 @@
-import { Navbar } from "@/components/navbar";
+import { WelcomeComponent } from "@/components/welcome";
 
 export default function Home() {
   return (
     <main>
-      <Navbar />
+      <WelcomeComponent />
     </main>
   );
 }

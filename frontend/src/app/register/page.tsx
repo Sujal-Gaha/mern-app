@@ -41,7 +41,7 @@ export default function RegisterPage() {
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col justify-center items-center p-4">
       <div className="mb-8">
-        <AppLogo />
+        <AppLogo mode="dark" />
       </div>
       <Card className="w-full max-w-md">
         <CardHeader>

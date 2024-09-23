@@ -1,18 +1,41 @@
+"use client";
+
+import { navbarLinks } from "@/constants/navbar-links";
 import { AppLogo } from "./logo";
 import { Button } from "./ui/button";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { getAppsPath } from "@/lib/config";
 
 export const Navbar = () => {
+  const router = useRouter();
+
+  const { loginPath } = getAppsPath();
+
   return (
-    <nav className="flex items-center justify-between py-4 px-10">
+    <nav className="flex items-center justify-between py-2 px-10">
       <div>
-        <AppLogo />
+        <AppLogo size="md" />
       </div>
-      <div className="flex items-center gap-4">
-        <div>Home</div>
-        <div>Categories</div>
-        <div>About</div>
+      <div className="flex items-center gap-10">
+        {navbarLinks.map((link) => {
+          return (
+            <Link
+              key={link.id}
+              href={link.href}
+              className="font-medium hover:text-red-500"
+            >
+              {link.name}
+            </Link>
+          );
+        })}
         <div>
-          <Button type="button" variant="outline">
+          <Button
+            type="button"
+            variant="outline"
+            className="font-medium hover:text-red-500"
+            onClick={() => router.push(loginPath)}
+          >
             Sign In
           </Button>
         </div>
