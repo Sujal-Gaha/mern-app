@@ -9,7 +9,7 @@ import { handleError } from "../../utils/errorHandler";
 
 const getAllProducts = async (req: Request, res: Response) => {
   try {
-    const product = await ProductModel.find();
+    const product = await ProductModel.find({}).limit(20);
 
     const productResponse: TGetAllProducts = {
       status: 200,
