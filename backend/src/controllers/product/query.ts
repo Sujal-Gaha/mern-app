@@ -5,27 +5,23 @@ import {
   TGetAllProducts,
   TGetProductByProductId,
 } from "../../types/product/TProductResponse";
-import { handleError } from "../../utils/errorHandler";
+import { asyncHandler } from "../../utils/async-handler";
 
-const getAllProducts = async (req: Request, res: Response) => {
-  try {
-    const product = await ProductModel.find({}).limit(20);
+const getAllProducts = asyncHandler(async (req: Request, res: Response) => {
+  const product = await ProductModel.find({}).limit(20);
 
-    const productResponse: TGetAllProducts = {
-      status: 200,
-      data: product,
-      success: true,
-      message: "Fetched all the products successfully",
-    };
+  const productResponse: TGetAllProducts = {
+    status: 200,
+    data: product,
+    success: true,
+    message: "Fetched all the products successfully",
+  };
 
-    res.status(200).json(productResponse);
-  } catch (error) {
-    handleError(res, error);
-  }
-};
+  res.status(200).json(productResponse);
+});
 
-const getProductByProductId = async (req: Request, res: Response) => {
-  try {
+const getProductByProductId = asyncHandler(
+  async (req: Request, res: Response) => {
     const { productId } = req.params;
 
     if (!productId) {
@@ -56,13 +52,11 @@ const getProductByProductId = async (req: Request, res: Response) => {
     };
 
     res.status(200).json(productByIdResponse);
-  } catch (error) {
-    handleError(res, error);
   }
-};
+);
 
-const getProductsByCategory = async (req: Request, res: Response) => {
-  try {
+const getProductsByCategory = asyncHandler(
+  async (req: Request, res: Response) => {
     const { categoryId } = req.params;
 
     if (!categoryId) {
@@ -104,13 +98,11 @@ const getProductsByCategory = async (req: Request, res: Response) => {
       success: true,
       message: "Successfully fetched the product by category",
     });
-  } catch (error) {
-    handleError(res, error);
   }
-};
+);
 
-const getProductsWithDiscount = async (req: Request, res: Response) => {
-  try {
+const getProductsWithDiscount = asyncHandler(
+  async (req: Request, res: Response) => {
     const productsWithDiscount = await ProductModel.find({
       discountRate: {
         $gt: 0,
@@ -123,10 +115,8 @@ const getProductsWithDiscount = async (req: Request, res: Response) => {
       success: true,
       message: "Fetched all the products with discount successfully",
     });
-  } catch (error) {
-    handleError(res, error);
   }
-};
+);
 
 export const getProductQueries = () => {
   return {

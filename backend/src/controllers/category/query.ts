@@ -1,21 +1,17 @@
 import { Request, Response } from "express";
 import { CategoryModel } from "../../models/category.model";
-import { handleError } from "../../utils/errorHandler";
+import { asyncHandler } from "../../utils/async-handler";
 
-const getAllCategory = async (req: Request, res: Response) => {
-  try {
-    const categories = await CategoryModel.find({});
+const getAllCategory = asyncHandler(async (req: Request, res: Response) => {
+  const categories = await CategoryModel.find({});
 
-    res.status(200).json({
-      status: 200,
-      data: categories,
-      success: true,
-      message: "Fetched all the categories successfully",
-    });
-  } catch (error) {
-    handleError(res, error);
-  }
-};
+  res.status(200).json({
+    status: 200,
+    data: categories,
+    success: true,
+    message: "Fetched all the categories successfully",
+  });
+});
 
 export const getCategoryQueries = () => {
   return { getAllCategory };
