@@ -19,7 +19,7 @@ productRouter.get("/getProductsWithDiscount", getProductsWithDiscount);
 const { addProduct, deleteProduct, updateProduct } = getProductMutations();
 
 productRouter.post("/add", addProduct);
-productRouter.post("/delete/:productId", deleteProduct);
+productRouter.delete("/delete/:productId", deleteProduct);
 productRouter.put("/update/:productId", updateProduct);
 
 export { productRouter };

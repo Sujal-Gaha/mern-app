@@ -9,7 +9,7 @@ categoryRouter.get("/", getAllCategory);
 
 const { addCategory, deleteCategory, updatedCategory } = getCategoryMutations();
 categoryRouter.post("/add", addCategory);
-categoryRouter.post("/delete/:categoryId", deleteCategory);
+categoryRouter.delete("/delete/:categoryId", deleteCategory);
 categoryRouter.put("/update/:categoryId", updatedCategory);
 
 export { categoryRouter };
