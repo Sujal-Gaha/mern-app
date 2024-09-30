@@ -1,4 +1,5 @@
 import { Button } from "./ui/button";
+import { Heart } from "lucide-react";
 
 const ProductCard = ({ key }: { key?: string | number }) => {
   return (
@@ -7,7 +8,9 @@ const ProductCard = ({ key }: { key?: string | number }) => {
       className="rounded-lg border bg-card text-card-foreground shadow-sm"
     >
       <div className="p-6 space-y-4">
-        <div className="aspect-square bg-gray-100 rounded-md"></div>
+        <div className="aspect-square border shadow border-gray-100 rounded-md relative">
+          <Heart className="absolute right-2 top-2 cursor-pointer" />
+        </div>
         <h3 className="text-lg font-bold">Product {key}</h3>
         <p className="text-sm text-gray-500">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit.
