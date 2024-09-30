@@ -4,6 +4,7 @@ import connectDB from "./config/db";
 import { productRouter } from "./routes/product.route";
 import { categoryRouter } from "./routes/category.route";
 import { userRouter } from "./routes/user.route";
+import { wishlistRouter } from "./routes/wishlist.route";
 
 dotenv.config();
 
@@ -21,3 +22,4 @@ connectDB()
 app.use("/api/v1/product", productRouter);
 app.use("/api/v1/category", categoryRouter);
 app.use("/api/v1/user", userRouter);
+app.use("/api/v1/wishlist", wishlistRouter);
