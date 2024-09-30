@@ -3,7 +3,7 @@ import "./globals.css";
 import { Navbar } from "@/components/navbar";
 
 export const metadata: Metadata = {
-  title: "Mern app",
+  title: "Bazaar Hub",
   description: "Learning MERN stack",
 };
 
