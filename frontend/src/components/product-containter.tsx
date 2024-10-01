@@ -12,7 +12,12 @@ const ProductCard = () => {
         <p className="text-sm text-gray-500">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit.
         </p>
-        <Button className="w-full">Add to Cart</Button>
+        <div className="flex flex-col space-y-2">
+          <Button className="w-full">Add to Cart</Button>
+          <Button className="w-full" variant="outline">
+            Purchase Now
+          </Button>
+        </div>
       </div>
     </div>
   );

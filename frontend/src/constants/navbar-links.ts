@@ -1,7 +1,7 @@
 import { TNavbarLink } from "../types/navbar-links";
 import { getAppsPath } from "../lib/config";
 
-const { homePath, categoryPath, aboutPath } = getAppsPath();
+const { homePath, categoryPath, cartPath, aboutPath } = getAppsPath();
 
 export const navbarLinks: TNavbarLink[] = [
   {
@@ -16,6 +16,11 @@ export const navbarLinks: TNavbarLink[] = [
   },
   {
     id: 3,
+    name: "Cart",
+    href: cartPath,
+  },
+  {
+    id: 4,
     name: "About",
     href: aboutPath,
   },
