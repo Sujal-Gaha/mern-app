@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Navbar } from "@/components/navbar";
+import { Footer } from "@/components/footer";
 
 export const metadata: Metadata = {
   title: "Bazaar Hub",
@@ -18,6 +19,7 @@ export default function RootLayout({
         <div className="flex flex-col min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
           <Navbar />
           {children}
+          <Footer />
         </div>
       </body>
     </html>
