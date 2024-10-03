@@ -3,13 +3,20 @@ import { Heart } from "lucide-react";
 
 const ProductCard = () => {
   return (
-    <div className="rounded-lg border bg-card text-card-foreground shadow-sm">
+    <div className="rounded-lg border bg-card text-card-foreground shadow-sm dark:bg-gray-700 dark:border-gray-600">
       <div className="p-6 space-y-4">
-        <div className="aspect-square border shadow border-gray-100 rounded-md relative">
-          <Heart className="absolute right-2 top-2 cursor-pointer" />
+        <div className="relative aspect-square bg-gray-100 dark:bg-gray-600 rounded-md">
+          <Button
+            variant="ghost"
+            size="icon"
+            className="absolute top-2 right-2 h-8 w-8 rounded-full"
+            aria-label="Add to wishlist"
+          >
+            <Heart className="h-4 w-4" />
+          </Button>
         </div>
         <h3 className="text-lg font-bold">Product 1</h3>
-        <p className="text-sm text-gray-500">
+        <p className="text-sm text-gray-500 dark:text-gray-400">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit.
         </p>
         <div className="flex flex-col space-y-2">
@@ -25,7 +32,7 @@ const ProductCard = () => {
 
 const ProductContainer = () => {
   return (
-    <section className="w-full py-12 md:py-24 lg:py-32 flex items-center justify-center">
+    <section className="w-full py-12 md:py-24 lg:py-32 bg-white dark:bg-[#364652] flex items-center justify-center">
       <div className="container px-4 md:px-6">
         <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-center mb-8">
           Featured Products

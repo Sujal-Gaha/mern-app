@@ -6,7 +6,7 @@ import { JoinRegister } from "@/components/join-register";
 export default function Home() {
   const { ProductContainerComponent } = useProductComponents();
   return (
-    <main>
+    <main className="flex-1">
       <WelcomeComponent />
       {ProductContainerComponent}
       <Banner />
