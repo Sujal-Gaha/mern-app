@@ -5,6 +5,7 @@ import { productRouter } from "./routes/product.route";
 import { categoryRouter } from "./routes/category.route";
 import { userRouter } from "./routes/user.route";
 import { wishlistRouter } from "./routes/wishlist.route";
+import cors from "cors";
 
 dotenv.config();
 
@@ -12,6 +13,7 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 app.use(express.json());
+app.use(cors());
 
 connectDB()
   .then(() => {
