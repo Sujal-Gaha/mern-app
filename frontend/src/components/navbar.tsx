@@ -29,7 +29,7 @@ export const Navbar = () => {
 
   if (pathName !== loginPath && pathName !== registerPath) {
     return (
-      <header className="px-4 lg:px-6 h-14 flex items-center border-b border-gray-200 dark:border-gray-700 dark:bg-[#020300]">
+      <header className="px-4 lg:px-6 h-14 flex items-center border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-dark sticky top-0 z-50">
         <Link className="flex items-center justify-center" href="#">
           <AppLogo size="xs" mode={darkMode ? "dark" : "light"} />
         </Link>

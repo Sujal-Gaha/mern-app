@@ -4,7 +4,7 @@ import { Search } from "lucide-react";
 
 export const WelcomeComponent = () => {
   return (
-    <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48 bg-blue-50 dark:bg-black flex items-center justify-center">
+    <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48 bg-light dark:bg-dark flex items-center justify-center">
       <div className="container px-4 md:px-6">
         <div className="flex flex-col items-center space-y-4 text-center">
           <div className="space-y-2">
@@ -19,7 +19,7 @@ export const WelcomeComponent = () => {
           <div className="w-full max-w-sm space-y-2">
             <form className="flex space-x-2">
               <Input
-                className="flex-1"
+                className="flex-1 bg-white"
                 placeholder="Search for products..."
                 type="search"
               />

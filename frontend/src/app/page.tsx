@@ -1,15 +1,15 @@
 import { WelcomeComponent } from "@/components/welcome";
-import { useProductComponents } from "@/components/product-containter";
 import { Banner } from "@/components/banner";
 import { JoinRegister } from "@/components/join-register";
+import { ProductContainer } from "@/components/product-containter";
 
 export default function Home() {
-  const { ProductContainerComponent } = useProductComponents();
   return (
     <main className="flex-1">
       <WelcomeComponent />
-      {ProductContainerComponent}
+      <ProductContainer container_title="Discount Products" data={["data1"]} />
       <Banner />
+      <ProductContainer container_title="Featured Products" data={["asdl"]} />
       <JoinRegister />
     </main>
   );

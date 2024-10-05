@@ -1,9 +1,8 @@
 import { CreditCard, RotateCcw, Truck } from "lucide-react";
-import React from "react";
 
 export const Banner = () => {
   return (
-    <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-100 flex items-center justify-center">
+    <section className="w-full py-12 md:py-24 lg:py-32 bg-light dark:bg-dark flex items-center justify-center">
       <div className="container px-4 md:px-6">
         <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-center mb-8">
           Why Choose Bazaar Hub?
