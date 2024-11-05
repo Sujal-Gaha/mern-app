@@ -3,6 +3,11 @@ import { asyncHandler } from "../../utils/async-handler";
 import { UserModel } from "../../models/user.model";
 import bcrypt from "bcrypt";
 import { createSecretToken } from "../../auth/secret-token";
+import dotenv from "dotenv";
+
+dotenv.config();
+
+const FRONTEND_URL = process.env.FRONTEND_URL || "http://localhost:3000";
 
 const registerUser = asyncHandler(async (req: Request, res: Response) => {
   const { username, email, password } = req.body;
@@ -65,6 +70,48 @@ const registerUser = asyncHandler(async (req: Request, res: Response) => {
   });
 });
 
+const loginUser = asyncHandler(async (req: Request, res: Response) => {
+  const { email, password } = req.body;
+
+  if (!(email && password)) {
+    return res.status(400).json({
+      status: 400,
+      data: null,
+      success: false,
+      message: "All fields are required",
+    });
+  }
+
+  const user = await UserModel.findOne({ email });
+
+  if (!(user && (await bcrypt.compare(password, user.password)))) {
+    return res.status(404).json({
+      status: 400,
+      data: null,
+      success: false,
+      message: "Invalid Credential",
+    });
+  }
+
+  const token = createSecretToken(user._id);
+
+  res.cookie("token", token, {
+    domain: FRONTEND_URL,
+    path: "/",
+    expires: new Date(Date.now() + 86400000),
+    secure: true,
+    httpOnly: true,
+    sameSite: "none",
+  });
+
+  return res.status(200).json({
+    status: 200,
+    data: user,
+    success: true,
+    message: "Logged In Successfully",
+  });
+});
+
 export const getUserMutations = () => {
-  return { registerUser };
+  return { registerUser, loginUser };
 };

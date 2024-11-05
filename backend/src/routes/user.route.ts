@@ -7,7 +7,8 @@ const userRouter = express.Router();
 const { getAllUsers } = getUserQueries();
 userRouter.get("/", getAllUsers);
 
-const { registerUser } = getUserMutations();
+const { registerUser, loginUser } = getUserMutations();
 userRouter.post("/register", registerUser);
+userRouter.post("/login", loginUser);
 
 export { userRouter };
