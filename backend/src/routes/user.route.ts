@@ -4,8 +4,9 @@ import { getUserQueries } from "../controllers/user/query";
 
 const userRouter = express.Router();
 
-const { getAllUsers } = getUserQueries();
+const { getAllUsers, logoutUser } = getUserQueries();
 userRouter.get("/", getAllUsers);
+userRouter.get("/logout", logoutUser);
 
 const { registerUser, loginUser } = getUserMutations();
 userRouter.post("/register", registerUser);
