@@ -4,10 +4,11 @@ import { navbarLinks } from "@/constants/navbar-links";
 import { AppLogo } from "./logo";
 import { Button } from "./ui/button";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { getAppsPath } from "@/lib/config";
 import { useEffect, useState } from "react";
 import { Moon, Sun } from "lucide-react";
+import { useAppsPathState } from "@/utils";
 
 export const Navbar = () => {
   const [darkMode, setDarkMode] = useState(false);
@@ -23,11 +24,12 @@ export const Navbar = () => {
   const toggleDarkMode = () => setDarkMode(!darkMode);
 
   const router = useRouter();
-  const pathName = usePathname();
 
-  const { loginPath, registerPath } = getAppsPath();
+  const { loginPath } = getAppsPath();
+  const { isPathLogin, isPathRegister, isPathForgotPassword } =
+    useAppsPathState();
 
-  if (pathName !== loginPath && pathName !== registerPath) {
+  if (!(isPathLogin || isPathRegister || isPathForgotPassword)) {
     return (
       <header className="px-4 lg:px-6 h-14 flex items-center border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-dark sticky top-0 z-50">
         <Link className="flex items-center justify-center" href="#">

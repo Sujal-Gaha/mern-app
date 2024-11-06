@@ -4,8 +4,8 @@ export const getAppsPath = () => {
     categoryPath: "/category",
     cartPath: "/cart",
     aboutPath: "/about",
-    loginPath: "/login",
-    registerPath: "/register",
+    loginPath: "/auth/login",
+    registerPath: "/auth/register",
     forgotPasswordPath: "/forgot-password",
   } as const;
 };

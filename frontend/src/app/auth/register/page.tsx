@@ -15,18 +15,27 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { LuFacebook } from "react-icons/lu";
 import { FiGithub } from "react-icons/fi";
-import { getAppsPath } from "@/lib/config";
 import { AppLogo } from "@/components/logo";
+import { getAppsPath } from "@/lib/config";
 
-export default function LoginPage() {
+export default function RegisterPage() {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
-  const { registerPath } = getAppsPath();
+  const { loginPath } = getAppsPath();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Login attempted with:", { email, password });
+    console.log("Registration attempted with:", {
+      firstName,
+      lastName,
+      email,
+      password,
+      confirmPassword,
+    });
   };
 
   return (
@@ -36,14 +45,32 @@ export default function LoginPage() {
       </div>
       <Card className="w-full max-w-md">
         <CardHeader>
-          <CardTitle>Welcome back</CardTitle>
-          <CardDescription>
-            Enter your credentials to access your account
-          </CardDescription>
+          <CardTitle>Create an account</CardTitle>
+          <CardDescription>Enter your details to register</CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit}>
             <div className="space-y-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="firstName">First Name</Label>
+                  <Input
+                    id="firstName"
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
+                    required
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="lastName">Last Name</Label>
+                  <Input
+                    id="lastName"
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
+                    required
+                  />
+                </div>
+              </div>
               <div className="space-y-2">
                 <Label htmlFor="email">Email</Label>
                 <Input
@@ -65,23 +92,32 @@ export default function LoginPage() {
                   required
                 />
               </div>
+              <div className="space-y-2">
+                <Label htmlFor="confirmPassword">Confirm Password</Label>
+                <Input
+                  id="confirmPassword"
+                  type="password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  required
+                />
+              </div>
               <div className="flex items-center space-x-2">
-                <Checkbox id="remember" />
-                <Label htmlFor="remember">Remember me</Label>
+                <Checkbox id="terms" required />
+                <Label htmlFor="terms" className="text-sm">
+                  I agree to the Terms and Conditions
+                </Label>
               </div>
               <Button type="submit" className="w-full">
-                Log in
+                Register
               </Button>
             </div>
           </form>
         </CardContent>
         <CardFooter className="flex flex-col space-y-4">
-          <div className="flex justify-between w-full text-sm">
-            <a href="#" className="text-primary hover:underline">
-              Forgot password?
-            </a>
-            <a href={registerPath} className="text-primary hover:underline">
-              Sign up
+          <div className="text-sm text-center">
+            <a href={loginPath} className="text-primary hover:underline">
+              Already have an account? Log in
             </a>
           </div>
           <div className="relative w-full">
@@ -90,17 +126,17 @@ export default function LoginPage() {
             </div>
             <div className="relative flex justify-center text-xs uppercase">
               <span className="bg-background px-2 text-muted-foreground">
-                Or continue with
+                Or register with
               </span>
             </div>
           </div>
           <div className="flex space-x-4">
             <Button variant="outline" className="w-full">
-              <FiGithub className="mr-2 h-4 w-4" />
+              <FiGithub className="mr-2 text-base" />
               Github
             </Button>
             <Button variant="outline" className="w-full">
-              <LuFacebook className="mr-2 h-4 w-4" />
+              <LuFacebook className="mr-2 text-base" />
               Facebook
             </Button>
           </div>
