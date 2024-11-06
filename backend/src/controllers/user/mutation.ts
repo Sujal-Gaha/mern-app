@@ -62,11 +62,11 @@ const registerUser = asyncHandler(async (req: Request, res: Response) => {
     sameSite: "none",
   });
 
-  res.status(201).json({
+  return res.status(201).json({
     status: 201,
     data: user,
     success: true,
-    message: "Registered Successfully!",
+    message: "Your account has been created successfully!",
   });
 });
 

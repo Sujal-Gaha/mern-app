@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -17,26 +16,70 @@ import { LuFacebook } from "react-icons/lu";
 import { FiGithub } from "react-icons/fi";
 import { AppLogo } from "@/components/logo";
 import { getAppsPath } from "@/lib/config";
+import { SubmitHandler, useForm } from "react-hook-form";
+import {
+  RegisterSchema,
+  TErrorResponse,
+  TRegisterUser,
+  TRegisterUserOutput,
+} from "@/types";
+import { useState } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { ErrorText } from "@/components/error";
+import { useMutation } from "@tanstack/react-query";
+import { registerUser } from "@/data";
+import { ToastError, ToastSuccess } from "@/components/toast";
+import { useRouter } from "next/navigation";
 
 export default function RegisterPage() {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
+  const router = useRouter();
+  const registerMtn = useMutation<
+    TRegisterUserOutput,
+    TErrorResponse,
+    TRegisterUser
+  >({
+    mutationFn: registerUser,
+    onSuccess: (data) => {
+      ToastSuccess({
+        title: "Registration",
+        description: data.message,
+      });
+      router.push("/");
+    },
+    onError: (error) => {
+      ToastError({
+        title: "Registration Failed",
+        description: error.message,
+      });
+    },
+  });
+
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<TRegisterUser>({
+    resolver: zodResolver(RegisterSchema),
+    defaultValues: {
+      password: "",
+    },
+  });
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+
+  const passwordsMatch = password === watch("password");
+
+  const registerUserHandler: SubmitHandler<TRegisterUser> = async (data) => {
+    try {
+      if (passwordsMatch) {
+        await registerMtn.mutateAsync(data);
+      }
+    } catch (error) {
+      console.log("Error ", error);
+    }
+  };
 
   const { loginPath } = getAppsPath();
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log("Registration attempted with:", {
-      firstName,
-      lastName,
-      email,
-      password,
-      confirmPassword,
-    });
-  };
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col justify-center items-center p-4">
@@ -49,27 +92,14 @@ export default function RegisterPage() {
           <CardDescription>Enter your details to register</CardDescription>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit(registerUserHandler)}>
             <div className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="firstName">First Name</Label>
-                  <Input
-                    id="firstName"
-                    value={firstName}
-                    onChange={(e) => setFirstName(e.target.value)}
-                    required
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="lastName">Last Name</Label>
-                  <Input
-                    id="lastName"
-                    value={lastName}
-                    onChange={(e) => setLastName(e.target.value)}
-                    required
-                  />
-                </div>
+              <div className="space-y-2">
+                <Label htmlFor="username">Username</Label>
+                <Input id="username" type="text" {...register("username")} />
+                {errors.username?.message ? (
+                  <ErrorText error={errors.username.message} />
+                ) : null}
               </div>
               <div className="space-y-2">
                 <Label htmlFor="email">Email</Label>
@@ -77,10 +107,11 @@ export default function RegisterPage() {
                   id="email"
                   type="email"
                   placeholder="m@example.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
+                  {...register("email")}
                 />
+                {errors.email?.message ? (
+                  <ErrorText error={errors.email.message} />
+                ) : null}
               </div>
               <div className="space-y-2">
                 <Label htmlFor="password">Password</Label>
@@ -88,7 +119,9 @@ export default function RegisterPage() {
                   id="password"
                   type="password"
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={(event) => {
+                    setPassword(event.target.value);
+                  }}
                   required
                 />
               </div>
@@ -97,10 +130,13 @@ export default function RegisterPage() {
                 <Input
                   id="confirmPassword"
                   type="password"
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                  required
+                  {...register("password")}
                 />
+                {!passwordsMatch ? (
+                  <ErrorText error="Password doesnot match" />
+                ) : errors.password?.message ? (
+                  <ErrorText error={errors.password.message} />
+                ) : null}
               </div>
               <div className="flex items-center space-x-2">
                 <Checkbox id="terms" required />
@@ -108,8 +144,12 @@ export default function RegisterPage() {
                   I agree to the Terms and Conditions
                 </Label>
               </div>
-              <Button type="submit" className="w-full">
-                Register
+              <Button
+                type="submit"
+                className="w-full"
+                disabled={registerMtn.isPending}
+              >
+                {registerMtn.isPending ? "Registering..." : "Register"}
               </Button>
             </div>
           </form>
