@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -17,16 +16,71 @@ import { LuFacebook } from "react-icons/lu";
 import { FiGithub } from "react-icons/fi";
 import { AppLogo } from "@/components/logo";
 import { getAppsPath } from "@/lib/config";
+import { SubmitHandler, useForm } from "react-hook-form";
+import {
+  LoginSchema,
+  TErrorResponse,
+  TLoginUser,
+  TLoginUserOutput,
+} from "@/types";
+import { ErrorText } from "@/components/error";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation } from "@tanstack/react-query";
+import { loginUser } from "@/data";
+import { ToastError, ToastSuccess } from "@/components/toast";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+
+  const router = useRouter();
+
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<TLoginUser>({
+    resolver: zodResolver(LoginSchema),
+  });
+  useEffect(() => {
+    const { unsubscribe } = watch(() => {
+      setError("");
+    });
+    return () => unsubscribe();
+  }, [watch]);
+
+  const loginUserMtn = useMutation<
+    TLoginUserOutput,
+    TErrorResponse,
+    TLoginUser
+  >({
+    mutationFn: loginUser,
+    onSuccess: (data) => {
+      ToastSuccess({
+        title: "Log In Successfull",
+        description: data.message,
+      });
+      return router.push("/");
+    },
+    onError: (error) => {
+      setError(error.message);
+    },
+  });
 
   const { registerPath } = getAppsPath();
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log("Login attempted with:", { email, password });
+  const loginUserHandler: SubmitHandler<TLoginUser> = async (data) => {
+    try {
+      await loginUserMtn.mutateAsync(data);
+    } catch (error) {
+      console.log("Error ", error);
+      ToastError({
+        title: "Login Failed",
+        description: "Something Went Wrong",
+      });
+    }
   };
 
   return (
@@ -42,34 +96,42 @@ export default function LoginPage() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit(loginUserHandler)}>
             <div className="space-y-4">
               <div className="space-y-2">
                 <Label htmlFor="email">Email</Label>
                 <Input
                   id="email"
-                  type="email"
+                  type="text"
                   placeholder="m@example.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
+                  {...register("email")}
                 />
+                {errors.email?.message ? (
+                  <ErrorText error={errors.email.message} />
+                ) : null}
               </div>
               <div className="space-y-2">
                 <Label htmlFor="password">Password</Label>
                 <Input
                   id="password"
                   type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
+                  {...register("password")}
                 />
+                {errors.password?.message ? (
+                  <ErrorText error={errors.password.message} />
+                ) : error.length ? (
+                  <ErrorText error={error} />
+                ) : null}
               </div>
               <div className="flex items-center space-x-2">
                 <Checkbox id="remember" />
                 <Label htmlFor="remember">Remember me</Label>
               </div>
-              <Button type="submit" className="w-full">
+              <Button
+                type="submit"
+                className="w-full"
+                disabled={loginUserMtn.isPending}
+              >
                 Log in
               </Button>
             </div>

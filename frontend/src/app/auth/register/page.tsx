@@ -44,7 +44,7 @@ export default function RegisterPage() {
         title: "Registration",
         description: data.message,
       });
-      router.push("/");
+      router.push("/auth/login");
     },
     onError: (error) => {
       ToastError({

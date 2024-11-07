@@ -22,7 +22,7 @@ export default function RootLayout({
             {children}
             <Footer />
           </div>
-          <Toaster duration={5000} position="top-right" />
+          <Toaster duration={4000} position="bottom-right" />
         </QueryClientProvider>
       </body>
     </html>
