@@ -1,24 +1,56 @@
 import { Request, Response } from "express";
 import { ProductModel } from "../../models/product.model";
 import { asyncHandler } from "../../utils/async-handler";
+import { UserModel } from "../../models/user.model";
 
 const addProduct = asyncHandler(async (req: Request, res: Response) => {
   const product = req.body;
 
-  if (
-    !product.name ||
-    !product.price ||
-    !product.stock ||
-    !product.description ||
-    !product.image ||
-    !product.category ||
-    !product.stock
-  ) {
+  const { userId } = req.query;
+
+  const isValidProduct =
+    product.name &&
+    product.price &&
+    product.stock &&
+    product.description &&
+    product.image &&
+    product.category;
+
+  if (!isValidProduct) {
     return res.status(400).json({
       status: 400,
       data: null,
       success: false,
       message: "Please fill in all the required fields",
+    });
+  }
+
+  if (!userId) {
+    return res.status(400).json({
+      status: 400,
+      data: null,
+      success: false,
+      message: "Please provide the userId",
+    });
+  }
+
+  const user = await UserModel.findById(userId);
+
+  if (!user) {
+    return res.status(400).json({
+      status: 400,
+      data: null,
+      success: false,
+      message: "User doesnot exist",
+    });
+  }
+
+  if (user.role !== "admin") {
+    return res.status(401).json({
+      status: 401,
+      data: null,
+      success: false,
+      message: "Authorization error",
     });
   }
 

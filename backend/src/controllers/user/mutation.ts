@@ -10,7 +10,7 @@ dotenv.config();
 const FRONTEND_URL = process.env.FRONTEND_URL || "http://localhost:3000";
 
 const registerUser = asyncHandler(async (req: Request, res: Response) => {
-  const { username, email, password } = req.body;
+  const { username, email, password, role } = req.body;
 
   if (!username || !email || !password) {
     return res.status(400).json({
@@ -50,6 +50,7 @@ const registerUser = asyncHandler(async (req: Request, res: Response) => {
     username: username,
     email: email,
     password: hashedPassword,
+    ...(role ? { role: role } : null),
   });
 
   const token = createSecretToken(user._id);

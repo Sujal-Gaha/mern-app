@@ -8,7 +8,7 @@ import {
 import { asyncHandler } from "../../utils/async-handler";
 
 const getAllProducts = asyncHandler(async (req: Request, res: Response) => {
-  const product = await ProductModel.find({}).limit(20);
+  const product = await ProductModel.find({});
 
   const productResponse: TGetAllProducts = {
     status: 200,
@@ -118,11 +118,47 @@ const getProductsWithDiscount = asyncHandler(
   }
 );
 
+const getProductsWithLimit = asyncHandler(
+  async (req: Request, res: Response) => {
+    const { limit } = req.query;
+
+    if (!limit) {
+      return res.status(400).json({
+        status: 400,
+        data: null,
+        success: false,
+        message: "Please provide the limit",
+      });
+    }
+
+    const products = await ProductModel.find({}, null, {
+      limit: +limit,
+    });
+
+    if (!products) {
+      return res.status(400).json({
+        status: 400,
+        data: null,
+        success: false,
+        message: "Failed to get products",
+      });
+    }
+
+    return res.status(200).json({
+      status: 200,
+      data: products,
+      success: true,
+      message: "Fetched products",
+    });
+  }
+);
+
 export const getProductQueries = () => {
   return {
     getAllProducts,
     getProductByProductId,
     getProductsByCategory,
     getProductsWithDiscount,
+    getProductsWithLimit,
   };
 };

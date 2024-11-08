@@ -9,12 +9,14 @@ const {
   getProductByProductId,
   getProductsByCategory,
   getProductsWithDiscount,
+  getProductsWithLimit,
 } = getProductQueries();
 
 productRouter.get("/", getAllProducts);
 productRouter.get("/getProductById/:productId", getProductByProductId);
 productRouter.get("/getProductsByCategory/:categoryId", getProductsByCategory);
 productRouter.get("/getProductsWithDiscount", getProductsWithDiscount);
+productRouter.get("/getProductsWithLimit", getProductsWithLimit);
 
 const { addProduct, deleteProduct, updateProduct } = getProductMutations();
 
