@@ -67,12 +67,43 @@ const addProduct = asyncHandler(async (req: Request, res: Response) => {
 const deleteProduct = asyncHandler(async (req: Request, res: Response) => {
   const { productId } = req.params;
 
+  const { userId } = req.query;
+
   if (!productId) {
     return res.status(400).json({
       status: 400,
       data: null,
       success: false,
       message: "Please provide the productId",
+    });
+  }
+
+  if (!userId) {
+    return res.status(400).json({
+      status: 400,
+      data: null,
+      success: false,
+      message: "Please provide the userId",
+    });
+  }
+
+  const user = await UserModel.findById(userId);
+
+  if (!user) {
+    return res.status(400).json({
+      status: 400,
+      data: null,
+      success: false,
+      message: "User doesnot exist",
+    });
+  }
+
+  if (user.role !== "admin") {
+    return res.status(401).json({
+      status: 401,
+      data: null,
+      success: false,
+      message: "Authorization error",
     });
   }
 
